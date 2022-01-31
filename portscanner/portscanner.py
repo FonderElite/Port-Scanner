@@ -27,7 +27,10 @@ class PortScanner(object):
        time.sleep(0.5)
        print(f"{Fore.WHITE}Script started at: {Fore.GREEN}{str(dt_string)}{Fore.WHITE}")     
        time.sleep(0.5)
-       print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Scanning 10000 ports.\n")
+       if self.port == None:
+            pass
+        else:
+            print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Scanning {self.port} ports.\n")
     def scan_ports(self):
         scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         scanner.settimeout(1)
