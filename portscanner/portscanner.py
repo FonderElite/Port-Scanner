@@ -29,7 +29,7 @@ class PortScanner(object):
        time.sleep(0.5)
        if self.port == None:
             pass
-        else:
+       else:
             print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Scanning {self.port} ports.\n")
     def scan_ports(self):
         scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
