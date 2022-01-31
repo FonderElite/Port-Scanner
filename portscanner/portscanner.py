@@ -25,7 +25,9 @@ class PortScanner(object):
        time.sleep(0.3)
        print(f"{Fore.WHITE}Scanning Target: {Fore.GREEN}{self.target}")
        time.sleep(0.5)
-       print(f"{Fore.WHITE}Script started at: {Fore.GREEN}{str(dt_string)}{Fore.WHITE}")       
+       print(f"{Fore.WHITE}Script started at: {Fore.GREEN}{str(dt_string)}{Fore.WHITE}")     
+       time.sleep(0.5)
+       print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Scanning 10000 ports.\n")
     def scan_ports(self):
         scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         scanner.settimeout(1)
@@ -34,8 +36,6 @@ class PortScanner(object):
             scanner.close()
             with print_lock:
                 print(f'{colors.BWhite}[{colors.BGreen}+{colors.BWhite}]Open Port: {port}')
-#                if port == 80:
-#                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Apache Solr service is running.\n")
         except KeyboardInterrupt:
             print(f"{Fore.WHITE}[{Fore.RED}-{Fore.WHITE}]Exiting Program.")
             sys.exit()
