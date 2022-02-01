@@ -5,12 +5,14 @@ from colorama import Fore
 print_lock = threading.Lock()
 parser = argparse.ArgumentParser()
 parser.add_argument('-t','--target',metavar='',help='IP of the target or domain. (Ex. google.com)')
-parser.add_argument('-pl','--portlimit',metavar='',help='Number limit of the port scanning,(Ex. 1000)')
+parser.add_argument('-pl','--portlimit',metavar='',help='Number limit of the port scanning. (Ex. 1000)')
+parser.add_argument('-th','--threads',metavar='',help='Number of threads/workers. (default: 100)', default=100)
 args = parser.parse_args()
 class PortScanner(object):
-    def __init__(self,target,portl):
+    def __init__(self,target,portl,threads):
         self.target = target
         self.portl = portl
+        self.threads = threads
     def banner(self):
        now = datetime.now()
        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -30,7 +32,9 @@ class PortScanner(object):
            pass
        else:
            time.sleep(0.5)
-           print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Scanning {self.portl} ports.\n")
+           print(f"{Fore.WHITE}]Port Range: {Fore.GREEN}1{Fore.WHITE}-{Fore.GREEN}{self.portl}")
+           time.sleep(0.3)
+           print(f"{Fore.WHITE}Threads:{Fore.GREEN} {self.threads}\n")
     def scan_ports(self,port):
         scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         scanner.settimeout(1)
@@ -72,7 +76,7 @@ class PortScanner(object):
                 elif port == 2095:
                     print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]WEB-MAIL\n")
                 elif port == 2096:
-                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]WEB-MAIL SSL\n")
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}{Fore.WHITE}]WEB-MAIL SSL\n")
                 elif port == 2077:
                     print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Web-DAV/Web-DISK\n")
                 elif port == 2078:
@@ -87,14 +91,15 @@ class PortScanner(object):
             pass
 
 if __name__ == "__main__":
-    call_class = PortScanner(args.target,args.portlimit)
+    call_class = PortScanner(args.target,args.portlimit,args.threads)
     banner = call_class.banner()
     try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=250) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=int(args.threads)) as executor:
             for port in range(int(args.portlimit)):
 
                 executor.submit(call_class.scan_ports,port + 1)
     except TypeError:
         print(f"{Fore.GREEN}Usage: {Fore.CYAN}python3 {Fore.WHITE}<portscanner.py> {Fore.GREEN}-t {Fore.WHITE}<target> {Fore.GREEN}-pl {Fore.WHITE}<port-limit>")
+
 
 
