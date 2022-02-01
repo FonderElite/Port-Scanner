@@ -39,11 +39,44 @@ class PortScanner(object):
             scanner.close()
             with print_lock:
                 print(f'{colors.BWhite}[{colors.BGreen}+{colors.BWhite}]Open Port: {port}')
-                if port == 80:
-                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]HTTP.\n")
+                if  port == 21:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]FTP\n")
+                elif port == 22:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]SSH/FTPS\n")
+                elif port == 25:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]SMTP\n")
+                elif port == 80:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]HTTP\n")
+                elif port == 110:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]POP3\n")
+                elif port == 143:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]IMAP\n")
+                elif port == 161:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]SNMP(Simple Network Management Protocol)\n")
                 elif port == 443:
-                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]HTTPS.\n")
-
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]HTTPS\n")
+                elif port == 587:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]SMTP SSL\n")
+                elif port == 993:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]IMAP SSL\n")
+                elif port == 995:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]POP3 SSL\n")
+                elif port == 2082:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]CPANEL\n")
+                elif port == 2083:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]CPANEL SSL\n")                
+                elif port == 2086:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]WHM(Web Host Manager)\n")
+                elif port == 2087:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]WHM SSL(Web Host Manager) \n")
+                elif port == 2095:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]WEB-MAIL\n")
+                elif port == 2096:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]WEB-MAIL SSL\n")
+                elif port == 2077:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Web-DAV/Web-DISK\n")
+                elif port == 2078:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Web-DAV/Web-DISK SSL\n")
         except KeyboardInterrupt:
             print(f"{Fore.WHITE}[{Fore.RED}-{Fore.WHITE}]Exiting Program.")
             sys.exit()
