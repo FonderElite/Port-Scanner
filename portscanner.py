@@ -39,8 +39,10 @@ class PortScanner(object):
             scanner.close()
             with print_lock:
                 print(f'{colors.BWhite}[{colors.BGreen}+{colors.BWhite}]Open Port: {port}')
-                if port == 8938:
-                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]Apache Solr service is running.\n")
+                if port == 80:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]HTTP.\n")
+                elif port == 443:
+                    print(f"{Fore.WHITE}[{Fore.YELLOW}!{Fore.WHITE}]HTTPS.\n")
 
         except KeyboardInterrupt:
             print(f"{Fore.WHITE}[{Fore.RED}-{Fore.WHITE}]Exiting Program.")
