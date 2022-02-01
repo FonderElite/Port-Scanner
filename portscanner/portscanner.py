@@ -1,8 +1,12 @@
-import socket,colors,time,sys,threading,arguments
+import socket,colors,time,sys,threading,argparse
 import concurrent.futures 
 from datetime import datetime
 from colorama import Fore
 print_lock = threading.Lock()
+parser = argparse.ArgumentParser()
+parser.add_argument('-t','--target',metavar='',help='IP of the target or domain. (Ex. google.com)')
+parser.add_argument('-pl','--portlimit',metavar='',help='Number limit of the port scanning,(Ex. 1000)')
+args = parser.parse_args()
 class PortScanner(object):
     def __init__(self,target,portl):
         self.target = target
@@ -22,7 +26,7 @@ class PortScanner(object):
        print(f"{Fore.WHITE}Scanning Target: {Fore.GREEN}{self.target}")
        time.sleep(0.5)
        print(f"{Fore.WHITE}Script started at: {Fore.GREEN}{str(dt_string)}{Fore.WHITE}")       
-       if arguments.args.target == None or arguments.args.portlimit == None:
+       if args.target == None or args.portlimit == None:
            pass
        else:
            time.sleep(0.5)
@@ -48,11 +52,12 @@ class PortScanner(object):
             pass
 
 if __name__ == "__main__":
-    call_class = PortScanner(arguments.args.target,arguments.args.portlimit)
+    call_class = PortScanner(args.target,args.portlimit)
     banner = call_class.banner()
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=250) as executor:
-            for port in range(10000):
+            for port in range(int(args.portlimit)):
+
                 executor.submit(call_class.scan_ports,port + 1)
     except TypeError:
         print(f"{Fore.GREEN}Usage: {Fore.CYAN}python3 {Fore.WHITE}<portscanner.py> {Fore.GREEN}-t {Fore.WHITE}<target> {Fore.GREEN}-pl {Fore.WHITE}<port-limit>")
